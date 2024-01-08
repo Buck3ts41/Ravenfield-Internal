@@ -11,8 +11,8 @@ namespace TestUnityInternal
 
     class Hacks : MonoBehaviour
     {
-        public Weapon.Configuration weaponConfiguration;
-        public Projectile.Configuration projectileConfiguraion;
+        //public Weapon.Configuration weaponConfiguration;
+        //public Projectile.Configuration projectileConfiguraion;
 
         private bool ravenesp = false;
         private bool eagleesp = false;
@@ -28,20 +28,24 @@ namespace TestUnityInternal
         private bool drawfov = false;
         private float fovRadius = 100f;
         private float smooth = 0f;
+        private bool noscreenshake = false;
         private bool vehiclename = false;
         private bool vehiclehealth = false;
         private bool aimbot = false;
         private bool objectesp = false;
         private bool godmode = false;
+        private bool gravitychanger = false;
         private bool nofall = false;
         private bool vehiclegodmod = false;
-        private bool camerashake = false;
-        private bool damagemulti = false;
-        private float multidamage = 70f;
-        private bool instareload = false;
+        private bool multispeed = false;
+        private bool headesp = false;
+        private float speedmulti = 1f;
+        private bool testesp = false;
+        private bool grenadeesp = false;
+        //private bool instareload = false;
         private bool infammo = false;
-        private bool nospread = false;
-        private bool norecoil = false;
+        //private bool nospread = false;
+        //private bool norecoil = false;
 
         public Transform target;
 
@@ -52,8 +56,8 @@ namespace TestUnityInternal
 
         public void Update()
         {
-            ModifyWeaponConfiguration();
-            ModifyProjectileConfiguration();
+            //ModifyWeaponConfiguration();
+            //ModifyProjectileConfiguration();
 
             if (Input.GetKeyDown(KeyCode.Insert))
             {
@@ -62,11 +66,6 @@ namespace TestUnityInternal
             if (infmedi == true && duration != null)
             {
                 duration.reducedLifetimePerResupply = 0f;
-            }
-            if (camerashake == true)
-            {
-                cameramov.frequency = 0f;
-                cameramov.magnitude = 0f;
             }
          
 
@@ -85,41 +84,42 @@ namespace TestUnityInternal
             }
         }
 
-        void ModifyProjectileConfiguration()
-        {
-            if (projectileConfiguraion != null)
-            {
-                if (damagemulti == true && localplayer.aiControlled == false)
-                {
-                    projectileConfiguraion.damage = multidamage;
-                }
-            }
-        }
-        void ModifyWeaponConfiguration()
-        {
-            if (weaponConfiguration != null)
-            {
-                if (infammo && localplayer.aiControlled == false)
-                {
-                    weaponConfiguration.ammo = 999;
-                }
-                if (instareload && localplayer.aiControlled == false)
-                {
-                    weaponConfiguration.reloadTime = 0f;
-                }
-                if (nospread && localplayer.aiControlled == false)
-                {
-                    weaponConfiguration.spread = 0f;
-                }
-                if (norecoil && localplayer.aiControlled == false)
-                {
-                    weaponConfiguration.kickback = 0f;
-                }
-            }
-        }
+        //void ModifyProjectileConfiguration()
+        //{
+            //if (projectileConfiguraion != null)
+            //{
+                //if (damagemulti == true && localplayer.aiControlled == false)
+                //{
+                    //projectileConfiguraion.damage = multidamage;
+                //}
+            //}
+        //}
+        //void ModifyWeaponConfiguration()
+        //{
+            //if (weaponConfiguration != null)
+            //{
+                //if (infammo && localplayer.aiControlled == false)
+                //{
+                    //weaponConfiguration.ammo = 999;
+                //}
+                //if (instareload && localplayer.aiControlled == false)
+                //{
+                    //weaponConfiguration.reloadTime = 0f;
+                //}
+                //if (nospread && localplayer.aiControlled == false)
+                //{
+                    //weaponConfiguration.spread = 0f;
+                //}
+                //if (norecoil && localplayer.aiControlled == false)
+                //{
+                    //weaponConfiguration.kickback = 0f;
+                //}
+            //}
+        //}
         public void OnGUI()
         {
-            
+            GUI.contentColor = Color.white;
+
             if (showMenu)
             {
                 menuRect = GUI.Window(0, menuRect, DrawMenu, "Buck3ts41");
@@ -131,36 +131,9 @@ namespace TestUnityInternal
                 Render.DrawCircle(center, fovRadius, Color.black, 32, 2f);
             }
 
-            
-
-            if (objectesp)
+            if (gravitychanger)
             {
-                foreach (Medipack medikit in UnityEngine.Object.FindObjectsOfType(typeof(Medipack)) as Medipack[])
-                {
-
-                    Vector3 pivotPos = medikit.transform.position;
-                    Vector3 medikitFootPos; medikitFootPos.x = pivotPos.x; medikitFootPos.z = pivotPos.z; medikitFootPos.y = pivotPos.y;
-                    Vector3 medikitHeadPos; medikitHeadPos.x = pivotPos.x; medikitHeadPos.z = pivotPos.z; medikitHeadPos.y = pivotPos.y + 2f;
-
-                    Vector3 w2s_footpos = Camera.main.WorldToScreenPoint(medikitFootPos);
-                    Vector3 w2s_headpos = Camera.main.WorldToScreenPoint(medikitHeadPos);
-
-                    Vector2 labelPos = new Vector2(w2s_headpos.x, Screen.height - w2s_headpos.y + 30f);
-                    GUI.Label(new Rect(labelPos.x, labelPos.y, 100f, 70f), "MediKit");
-                }
-
-                foreach (Ammobox ammocrate in UnityEngine.Object.FindObjectsOfType(typeof(Ammobox)) as Ammobox[])
-                {
-                    Vector3 pivotPos = ammocrate.transform.position;
-                    Vector3 ammocrateFootPos; ammocrateFootPos.x = pivotPos.x; ammocrateFootPos.z = pivotPos.z; ammocrateFootPos.y = pivotPos.y;
-                    Vector3 ammocrateHeadPos; ammocrateHeadPos.x = pivotPos.x; ammocrateHeadPos.z = pivotPos.z; ammocrateHeadPos.y = pivotPos.y + 2f;
-
-                    Vector3 w2s_footpos = Camera.main.WorldToScreenPoint(ammocrateFootPos);
-                    Vector3 w2s_headpos = Camera.main.WorldToScreenPoint(ammocrateHeadPos);
-
-                    Vector2 labelPos = new Vector2(w2s_headpos.x, Screen.height - w2s_headpos.y + 30f);
-                    GUI.Label(new Rect(labelPos.x, labelPos.y, 100f, 70f), "AmmoBox");
-                }
+                Vector3 gravity = new Vector3(0f, -2.81f, 0f);
             }
 
             foreach (Vehicle vehicle in UnityEngine.Object.FindObjectsOfType(typeof(Vehicle)) as Vehicle[])
@@ -206,6 +179,55 @@ namespace TestUnityInternal
                 Vector3 w2s_headpos = Camera.main.WorldToScreenPoint(playerHeadPos);
                 Vector3 screenPos = Camera.main.WorldToScreenPoint(w2s_headpos);
 
+                if (objectesp == true && w2s_footpos.z > 0f)
+                {
+                    foreach (Medipack medikit in UnityEngine.Object.FindObjectsOfType(typeof(Medipack)) as Medipack[])
+                    {
+
+                        Vector2 labelPos = new Vector2(w2s_headpos.x, Screen.height - w2s_headpos.y + 30f);
+                        GUI.Label(new Rect(labelPos.x, labelPos.y, 100f, 70f), "MediKit");
+                    }
+
+                    foreach (Ammobox ammocrate in UnityEngine.Object.FindObjectsOfType(typeof(Ammobox)) as Ammobox[])
+                    {
+
+                        Vector2 labelPos = new Vector2(w2s_headpos.x, Screen.height - w2s_headpos.y + 30f);
+                        GUI.Label(new Rect(labelPos.x, labelPos.y, 100f, 70f), "AmmoBox");
+                    }
+
+                }
+
+                if (grenadeesp && w2s_footpos.z > 0f)
+                    foreach (GrenadeProjectile grenade in UnityEngine.Object.FindObjectsOfType(typeof(GrenadeProjectile)) as GrenadeProjectile[])
+                    {
+                        Vector2 labelPos = new Vector2(w2s_headpos.x, Screen.height - w2s_headpos.y + 30f);
+                        GUI.Label(new Rect(labelPos.x, labelPos.y, 100f, 70f), "Grenade");
+                    }
+
+                if (headesp == true && player != null && player.aiControlled == true && player.team == 1 && w2s_footpos.z > 0f)
+                {
+                    Render.DrawCircle(w2s_headpos, 5f, Color.magenta, 16, 2f);
+                }
+
+                if (infammo && player !=null && player.aiControlled == false)
+                {
+                    player.activeWeapon.ammo = 999;
+                }
+
+                if (multispeed == true && player != null && player.aiControlled == false)
+                {
+                    player.speedMultiplier = speedmulti;
+                }
+
+                if (testesp == true && player != null && player.aiControlled == true && player.team == 1 && w2s_footpos.z > 0f)
+                {
+                    float height = w2s_headpos.y - w2s_footpos.y;
+                    float widthOffset = 2f;
+                    float width = height / widthOffset;
+                    //Render.DrawBoxOutline(new Vector2(w2s_footpos.x - (width / 2), (float)Screen.height - w2s_footpos.y - height), width, Color.red, 1f);
+
+                }
+
                 if (godmode && player != null && player.aiControlled == false)
                 {
                     player.maxHealth = 9999f;
@@ -224,7 +246,7 @@ namespace TestUnityInternal
                         AimAtPoint(new Vector2(screenPos.x, Screen.height - screenPos.y));
                     }
                 }
-
+                
                 if (ravenesp == true && player.team == 1 && w2s_footpos.z > 0f && player.dead == false && player.aiControlled == true)
                 {
                     DrawBoxESP(w2s_footpos, w2s_headpos, Color.red);
@@ -315,6 +337,7 @@ namespace TestUnityInternal
             damage = FindObjectOfType<Projectile>();
             reload = FindObjectOfType<Weapon>();
             localplayer = FindObjectOfType<Actor>();
+            
 
         }
 
@@ -324,7 +347,7 @@ namespace TestUnityInternal
             float widthOffset = 2f;
             float width = height / widthOffset;
 
-            Render.DrawBox(footpos.x - (width / 2), (float)Screen.height - footpos.y - height, width, height, color, 2f);
+            Render.DrawBox(footpos.x - (width / 2), (float)Screen.height - footpos.y - height, width, height, color, 1f);
         }
 
         public void DrawTraceline(Vector3 footpos, Vector3 headpos, Color color)
@@ -333,7 +356,7 @@ namespace TestUnityInternal
             float widthOffset = 2f;
             float width = height / widthOffset;
 
-            Render.DrawLine(new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2)), new Vector2(footpos.x, (float)Screen.height - footpos.y), color, 2f);
+            Render.DrawLine(new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2)), new Vector2(footpos.x, (float)Screen.height - footpos.y), color, 1f);
         }
 
         void AimAtPoint(Vector2 targetScreenPos)
@@ -349,6 +372,7 @@ namespace TestUnityInternal
         Projectile damage;
         Weapon reload;
         Actor localplayer;
+        
         void DrawMenu(int windowID)
         {
             GUILayout.BeginVertical();
@@ -405,6 +429,8 @@ namespace TestUnityInternal
                     vehiclename = GUILayout.Toggle(vehiclename, " Vehicle Name");
                     vehiclehealth = GUILayout.Toggle(vehiclehealth, " Vehicle Health");
                     objectesp = GUILayout.Toggle(objectesp, " Object Esp");
+                    grenadeesp = GUILayout.Toggle(grenadeesp, " Grenade Esp");
+                    //headesp = GUILayout.Toggle(headesp, " Head Esp");
                     GUILayout.EndVertical();
 
                     GUILayout.EndHorizontal();
@@ -415,15 +441,17 @@ namespace TestUnityInternal
                     godmode = GUILayout.Toggle(godmode, " Godmode");
                     nofall = GUILayout.Toggle(nofall, " No Ragdoll");
                     vehiclegodmod = GUILayout.Toggle(vehiclegodmod, " Vehicle Godmode");
-                    camerashake = GUILayout.Toggle(camerashake, " No Camerashake");
-                    damagemulti = GUILayout.Toggle(damagemulti, " Damage Multiplier");
+                    infammo = GUILayout.Toggle(infammo, " Infinite Ammo");
+                    multispeed = GUILayout.Toggle(multispeed, " Speed Multiplier");
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label(" Damage Multiplier");
-                    multidamage = GUILayout.HorizontalSlider(multidamage, 10f, 999f);
+                    GUILayout.Label(" Speed Multiplier");
+                    speedmulti = GUILayout.HorizontalSlider(speedmulti, 1f, 15f);
                     GUILayout.EndHorizontal();
-                    instareload = GUILayout.Toggle(instareload, " Instant Reload");
-                    nospread = GUILayout.Toggle(nospread, " No Spread");
-                    norecoil = GUILayout.Toggle(norecoil, " No Recoil");
+                    gravitychanger = GUILayout.Toggle(gravitychanger, " Less Gravity");
+                    
+                    //instareload = GUILayout.Toggle(instareload, " Instant Reload");
+                    //nospread = GUILayout.Toggle(nospread, " No Spread");
+                    //norecoil = GUILayout.Toggle(norecoil, " No Recoil");
                     break;
                     
             }
