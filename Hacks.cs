@@ -27,14 +27,15 @@ namespace TestUnityInternal
         private bool vehicleesp = false;
         private bool drawfov = false;
         private float fovRadius = 100f;
+        private float crossdimension = 50f;
+        private float crossthick = 1f;
         private float smooth = 0f;
-        private bool noscreenshake = false;
         private bool vehiclename = false;
         private bool vehiclehealth = false;
         private bool aimbot = false;
         private bool objectesp = false;
         private bool godmode = false;
-        private bool gravitychanger = false;
+        private bool crosshair = false;
         private bool nofall = false;
         private bool vehiclegodmod = false;
         private bool multispeed = false;
@@ -131,9 +132,9 @@ namespace TestUnityInternal
                 Render.DrawCircle(center, fovRadius, Color.black, 32, 2f);
             }
 
-            if (gravitychanger)
+            if (crosshair)
             {
-                Vector3 gravity = new Vector3(0f, -2.81f, 0f);
+                Render.DrawCenteredLines(crossdimension, Color.red, crossthick);
             }
 
             foreach (Vehicle vehicle in UnityEngine.Object.FindObjectsOfType(typeof(Vehicle)) as Vehicle[])
@@ -430,6 +431,12 @@ namespace TestUnityInternal
                     vehiclehealth = GUILayout.Toggle(vehiclehealth, " Vehicle Health");
                     objectesp = GUILayout.Toggle(objectesp, " Object Esp");
                     grenadeesp = GUILayout.Toggle(grenadeesp, " Grenade Esp");
+                    crosshair = GUILayout.Toggle(crosshair, " Crosshair");
+                    GUILayout.Label(" Crosshair Dimension");
+                    crossdimension = GUILayout.HorizontalSlider(crossdimension, 1f, 100f);
+                    GUILayout.Label(" Crosshair Thickness");
+                    crossthick = GUILayout.HorizontalSlider(crossthick, 0.5f, 3f);
+                    
                     //headesp = GUILayout.Toggle(headesp, " Head Esp");
                     GUILayout.EndVertical();
 
@@ -447,7 +454,7 @@ namespace TestUnityInternal
                     GUILayout.Label(" Speed Multiplier");
                     speedmulti = GUILayout.HorizontalSlider(speedmulti, 1f, 15f);
                     GUILayout.EndHorizontal();
-                    gravitychanger = GUILayout.Toggle(gravitychanger, " Less Gravity");
+                    
                     
                     //instareload = GUILayout.Toggle(instareload, " Instant Reload");
                     //nospread = GUILayout.Toggle(nospread, " No Spread");

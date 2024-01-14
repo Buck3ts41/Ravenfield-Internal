@@ -71,6 +71,24 @@ namespace TestUnityInternal
 				prevPoint = nextPoint;
 			}
 		}
+		public static void DrawCenteredLines(float lineLength, Color lineColor, float lineWidth)
+		{
+			// Calculate the center of the screen
+			Vector2 centerOfScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+			// Define the length of the lines
+			float halfLineLength = lineLength / 2f;
+
+			// Draw the first line horizontally
+			Vector2 startPoint1 = centerOfScreen + new Vector2(-halfLineLength, 0);
+			Vector2 endPoint1 = centerOfScreen + new Vector2(halfLineLength, 0);
+			DrawLine(startPoint1, endPoint1, lineColor, lineWidth);
+
+			// Draw the second line vertically
+			Vector2 startPoint2 = centerOfScreen + new Vector2(0, -halfLineLength);
+			Vector2 endPoint2 = centerOfScreen + new Vector2(0, halfLineLength);
+			DrawLine(startPoint2, endPoint2, lineColor, lineWidth);
+		}
 		public static void DrawBox(float x, float y, float w, float h, Color color, float thickness)
 		{
 			DrawLine(new Vector2(x, y), new Vector2(x + w, y), color, thickness);
